@@ -1,13 +1,16 @@
 #importe as bibliotecas
+
 import requests
 import json
 import pandas as pd
 
 #coleta as informacoes do TSE
+
 data = requests.get(
     'https://resultados.tse.jus.br/oficial/ele2022/544/dados-simplificados/br/br-c0001-e000544-r.json')
 
 #organiza as informacoes coletas
+
 json_data = json.loads(data.content)
 
 candidato = []
@@ -21,9 +24,12 @@ for informacoes in json_data['cand']:
         candidato.append(informacoes['nm'])
         votos.append(informacoes['vap'])
         porcentagem.append(informacoes['pvap'])
-        
+
+#categoriza a selecao das informacoes
+
 df_eleicao = pd.DataFrame(list(zip(candidato, votos, porcentagem)), columns = [
     'Candidato', 'Nº de Votos', 'Porcentagem'
 ])
+#Mostra o resultado
 
 print(df_eleicao)
